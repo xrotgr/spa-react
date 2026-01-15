@@ -13,7 +13,7 @@ export const Footer = () => {
     >
       <Typography variant="body2" align="center">
         <Link to="/" color="inherit">
-          © Мой Сайт
+          © My Website
         </Link>
       </Typography>
     </Box>
