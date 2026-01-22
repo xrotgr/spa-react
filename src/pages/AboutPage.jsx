@@ -1,7 +1,4 @@
-import { Header } from '../components/Header.jsx';
-import { Footer } from '../components/Footer.jsx';
 import { Typography } from '@mui/material';
-import { Fragment } from 'react';
 
 const AboutPage = () => {
   return (

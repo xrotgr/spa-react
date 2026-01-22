@@ -1,4 +1,4 @@
-import { Box, Typography, Container } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 export const Footer = () => {
@@ -6,15 +6,20 @@ export const Footer = () => {
     <Box
       component="footer"
       sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        bgcolor: 'primary.main',
         mt: 4,
         py: 4,
-        borderTop: '1px solid #160a0a',
       }}
     >
-      <Typography variant="body2" align="center">
-        <Link to="/" color="inherit">
-          © My Website
-        </Link>
+      <Typography
+        sx={{ textDecoration: 'none' }}
+        component={Link}
+        to="/"
+        color="#ffffff"
+      >
+        © My Website
       </Typography>
     </Box>
   );
