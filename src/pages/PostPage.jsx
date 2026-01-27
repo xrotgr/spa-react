@@ -19,7 +19,7 @@ const url = import.meta.env.VITE_API_URL;
 const PostPage = () => {
   const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const params = useParams();
 
   useEffect(() => {

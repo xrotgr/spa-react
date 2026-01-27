@@ -15,7 +15,7 @@ const url = import.meta.env.VITE_API_URL;
 
 export const FormDialog = ({ posts, setPosts, formDialogOpen, onClose }) => {
   const [formData, setFormData] = useState({
-    userId: 1,
+    userId: Math.random(),
     title: '',
     body: '',
   });
@@ -28,11 +28,11 @@ export const FormDialog = ({ posts, setPosts, formDialogOpen, onClose }) => {
       const response = await axios.post(`${url}/posts`, formData);
       console.log(response);
       setPosts([response.data, ...posts]);
-      setFormData((prev) => ({
-        ...prev,
+      setFormData({
+        userId: Math.random(),
         title: '',
         body: '',
-      }));
+      });
       setSubmitSuccess(true);
     } catch (e) {
       console.log(e);
@@ -91,6 +91,8 @@ export const FormDialog = ({ posts, setPosts, formDialogOpen, onClose }) => {
             fullWidth
             required
             label="Body"
+            multiline
+            minRows={8}
             margin="normal"
             value={formData.body}
             onChange={handleChange}

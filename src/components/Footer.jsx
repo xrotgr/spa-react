@@ -14,10 +14,13 @@ export const Footer = () => {
       }}
     >
       <Typography
-        sx={{ textDecoration: 'none' }}
         component={Link}
         to="/"
         color="#ffffff"
+        sx={{
+          textDecoration: 'none',
+          '&:hover': { textDecoration: 'underline' },
+        }}
       >
         © My Website
       </Typography>

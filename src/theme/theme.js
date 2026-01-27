@@ -7,11 +7,11 @@ export const theme = createTheme({
     },
 
     secondary: {
-      main: '#b1adad',
+      main: '#b1acac',
     },
 
     background: {
-      default: 'rgb(234, 234, 234)',
+      default: '#eaeaea',
       paper: '#ffffff',
     },
   },
@@ -24,14 +24,6 @@ export const theme = createTheme({
     MuiButton: {
       defaultProps: {
         color: 'secondary',
-        // variant: 'contained',
-      },
-    },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          backgroundColor: '#ffffff',
-        },
       },
     },
   },

@@ -10,7 +10,7 @@ const url = import.meta.env.VITE_API_URL;
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,13 +24,13 @@ const HomePage = () => {
       } catch (error) {
         console.log(error);
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
     fetchData();
   }, []);
 
-  if (isLoading)
+  if (loading)
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <CircularProgress />
