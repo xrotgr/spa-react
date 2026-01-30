@@ -4,12 +4,36 @@ import {
   CardActions,
   Button,
   Typography,
-  Box,
 } from '@mui/material';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { deletePost } from '../postsSlice';
+import { useState } from 'react';
+import { EditPostDialog } from './EditPostDialog';
 
-export const PostCard = ({ title, id, userId, users }) => {
-  const user = users.find((user) => +user.id === +userId);
+export const PostCard = ({ title, id }) => {
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+
+  const handleEditOpen = () => setEditDialogOpen(true);
+  const handleEditClose = () => setEditDialogOpen(false);
+
+  const dispatch = useDispatch();
+
+  const handleDelete = () => dispatch(deletePost(id));
+  const handleEdit = () => {
+    setEditDialogOpen(true);
+  };
+
+  if (editDialogOpen) {
+    return (
+      <EditPostDialog
+        id={id}
+        open={handleEditOpen}
+        handleEditClose={handleEditClose}
+      />
+    );
+  }
+
   return (
     <Card
       variant="outlined"
@@ -23,21 +47,6 @@ export const PostCard = ({ title, id, userId, users }) => {
       }}
     >
       <CardContent>
-        <Box>
-          <Typography
-            color="#000000"
-            gutterBottom
-            component={Link}
-            to={`users/${user?.id}`}
-            variant="body1"
-            sx={{
-              textDecoration: 'none',
-              '&:hover': { textDecoration: 'underline' },
-            }}
-          >
-            {user?.username}
-          </Typography>
-        </Box>
         <Typography
           variant="h6"
           color="#000000"
@@ -58,6 +67,22 @@ export const PostCard = ({ title, id, userId, users }) => {
           sx={{ borderRadius: '0.5rem' }}
         >
           Read more
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ borderRadius: '0.5rem' }}
+          onClick={handleDelete}
+        >
+          Delete
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ borderRadius: '0.5rem' }}
+          onClick={handleEdit}
+        >
+          Edit
         </Button>
       </CardActions>
     </Card>

@@ -1,12 +1,12 @@
 import { Card, Button, Container, Typography, Snackbar } from '@mui/material';
-import { FormDialog } from './FormDialog';
+import { CreatePostDialog } from './CreatePostDialog';
 import { useState } from 'react';
 
-export const CreatePost = ({ posts, setPosts }) => {
-  const [formDialogOpen, setFormDialogOpen] = useState(false);
+export const CreatePost = () => {
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
-  const handleClickOpen = () => setFormDialogOpen(true);
-  const handleClose = () => setFormDialogOpen(false);
+  const handleCreateOpen = () => setCreateDialogOpen(true);
+  const handleCreateClose = () => setCreateDialogOpen(false);
 
   return (
     <Container maxWidth="sm">
@@ -32,15 +32,14 @@ export const CreatePost = ({ posts, setPosts }) => {
           variant="contained"
           size="large"
           color="success"
-          onClick={handleClickOpen}
+          onClick={handleCreateOpen}
         >
           Create Post
         </Button>
-        <FormDialog
-          posts={posts}
-          setPosts={setPosts}
-          onClose={handleClose}
-          formDialogOpen={formDialogOpen}
+
+        <CreatePostDialog
+          open={createDialogOpen}
+          handleCreateClose={handleCreateClose}
         />
       </Card>
     </Container>

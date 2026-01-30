@@ -13,73 +13,40 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 
 const url = import.meta.env.VITE_API_URL;
 
 const PostPage = () => {
-  const [post, setPost] = useState({});
+  // console.log('post', initialPost);
+
+  // const [post, setPost] = useState(initialPost);
   const [comments, setComments] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const params = useParams();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const [postRes, CommentsRes] = await Promise.all([
-          axios.get(`${url}/posts/${params.id}`),
-          axios.get(`${url}/comments`),
-        ]);
-        setPost(postRes.data);
-        setComments(CommentsRes.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  console.log('params', params);
 
-    fetchData();
-  }, [params.id]);
+  const post = useSelector((store) =>
+    store.posts.find((post) => +params.id === +post.id)
+  );
 
-  const postComments = comments.filter((comment) => comment.postId === post.id);
+  // if (loading) {
+  //   return (
+  //     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+  //       <CircularProgress />
+  //     </Box>
+  //   );
+  // }
 
-  if (loading) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
   return (
     <>
       <Typography gutterBottom variant="h4" sx={{ mb: 6 }}>
         {post.title}
       </Typography>
       <Typography gutterBottom variant="h6" sx={{ mb: 6 }}>
-        {post.body}
+        {post.description}
       </Typography>
-      <Box>
-        <Typography variant="h5">Comments</Typography>
-        <List>
-          {postComments.map((postComment) => {
-            return (
-              <Fragment key={postComment.id}>
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar>H</Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={postComment.name}
-                    secondary={postComment.body}
-                  />
-                </ListItem>
-                <Divider />
-              </Fragment>
-            );
-          })}
-        </List>
-      </Box>
     </>
   );
 };
