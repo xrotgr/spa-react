@@ -1,11 +1,11 @@
-import HomePage from './pages/HomePage.jsx';
-import AboutPage from './pages/AboutPage.jsx';
-import NotFoundPage from './pages/NotFoundPage.jsx';
+import HomePage from '@/pages/HomePage';
+import AboutPage from '@/pages/AboutPage';
+import NotFoundPage from './pages/NotFoundPage';
 import { Outlet, createBrowserRouter } from 'react-router-dom';
-import { Footer } from './components/Footer.jsx';
-import { Header } from './components/Header.jsx';
+import { Footer } from './components/Footer';
+import { Header } from './components/Header';
 import { Box, Container } from '@mui/material';
-import PostPage from './pages/PostPage.jsx';
+import PostPage from './pages/PostPage';
 
 const Root = () => {
   return (

@@ -1,8 +1,8 @@
-import { Card, Button, Container, Typography, Snackbar } from '@mui/material';
-import { FormDialog } from './FormDialog';
+import { Card, Button, Container, Typography } from '@mui/material';
+import { CreatePostDialog } from './CreatePostDialog';
 import { useState } from 'react';
 
-export const CreatePost = ({ posts, setPosts }) => {
+export const CreatePostCard = () => {
   const [formDialogOpen, setFormDialogOpen] = useState(false);
 
   const handleClickOpen = () => setFormDialogOpen(true);
@@ -36,12 +36,7 @@ export const CreatePost = ({ posts, setPosts }) => {
         >
           Create Post
         </Button>
-        <FormDialog
-          posts={posts}
-          setPosts={setPosts}
-          onClose={handleClose}
-          formDialogOpen={formDialogOpen}
-        />
+        <CreatePostDialog open={formDialogOpen} onClose={handleClose} />
       </Card>
     </Container>
   );

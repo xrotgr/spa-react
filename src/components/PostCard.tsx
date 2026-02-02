@@ -1,3 +1,5 @@
+import NotFoundPage from '@/pages/NotFoundPage';
+import { Post, User } from '@/types/types';
 import {
   Card,
   CardContent,
@@ -8,8 +10,14 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-export const PostCard = ({ title, id, userId, users }) => {
+interface PostCardProps extends Post {
+  users: User[];
+}
+
+export const PostCard = ({ title, id, userId, users }: PostCardProps) => {
+  if (!userId) return <NotFoundPage />;
   const user = users.find((user) => +user.id === +userId);
+
   return (
     <Card
       variant="outlined"

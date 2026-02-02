@@ -1,6 +1,4 @@
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 import {
   Typography,
   List,
@@ -13,44 +11,32 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { Fragment } from 'react';
-
-const url = import.meta.env.VITE_API_URL;
+import { useGetCommentsQuery, useGetPostQuery } from '../api.slice';
+import NotFoundPage from './NotFoundPage';
 
 const PostPage = () => {
-  const [post, setPost] = useState({});
-  const [comments, setComments] = useState([]);
-  const [loading, setLoading] = useState(true);
   const params = useParams();
+  const postId = params.id ? parseInt(params.id, 10) : null;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const [postRes, CommentsRes] = await Promise.all([
-          axios.get(`${url}/posts/${params.id}`),
-          axios.get(`${url}/comments`),
-        ]);
-        setPost(postRes.data);
-        setComments(CommentsRes.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  if (!postId || isNaN(+postId)) {
+    return <NotFoundPage />;
+  }
 
-    fetchData();
-  }, [params.id]);
+  const { data: post, isFetching: postsFetching } = useGetPostQuery(postId);
 
-  const postComments = comments.filter((comment) => comment.postId === post.id);
+  const { data: comments = [], isFetching: commentsFetching } =
+    useGetCommentsQuery();
 
-  if (loading) {
+  if (!post || postsFetching || commentsFetching) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <CircularProgress />
       </Box>
     );
   }
+
+  const postComments = comments.filter((comment) => comment.postId === post.id);
+
   return (
     <>
       <Typography gutterBottom variant="h4" sx={{ mb: 6 }}>
