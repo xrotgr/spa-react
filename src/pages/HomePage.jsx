@@ -33,7 +33,6 @@ const HomePage = () => {
         draggable
         pauseOnHover
         theme="dark"
-        // transition={Bounce}
       />
     </>
   );
