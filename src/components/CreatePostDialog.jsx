@@ -9,6 +9,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { PostForm } from './PostForm';
 import { createPost } from '../postsSlice';
+import { toast } from 'react-toastify';
 
 export const CreatePostDialog = ({ open, handleCreateClose }) => {
   const dispatch = useDispatch();
@@ -17,6 +18,8 @@ export const CreatePostDialog = ({ open, handleCreateClose }) => {
     dispatch(createPost(values));
     handleCreateClose();
   };
+
+  const notify = () => toast('Post has been created!');
 
   return (
     <Dialog open={open} sx={{ p: 3 }}>
@@ -32,7 +35,13 @@ export const CreatePostDialog = ({ open, handleCreateClose }) => {
         <PostForm dispatchInput={dispatchCreate} />
       </DialogContent>
       <DialogActions>
-        <Button type="submit" form="formID" variant="contained" color="success">
+        <Button
+          type="submit"
+          form="formID"
+          variant="contained"
+          color="success"
+          onClick={notify}
+        >
           Create post
         </Button>
         <Button variant="contained" onClick={handleCreateClose}>

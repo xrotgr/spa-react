@@ -2,6 +2,7 @@ import { PostCard } from '../components/PostCard.jsx';
 import { CreatePost } from '../components/CreatePost.jsx';
 import { Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 
 const HomePage = () => {
   const posts = useSelector((store) => {
@@ -21,6 +22,19 @@ const HomePage = () => {
           </Grid>
         ))}
       </Grid>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        // transition={Bounce}
+      />
     </>
   );
 };
