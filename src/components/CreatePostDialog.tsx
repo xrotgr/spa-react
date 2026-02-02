@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 
 import { PostForm } from './PostForm';
+import { useCreatePostMutation } from '@/api.slice';
 import { toast } from 'react-toastify';
 
 interface CreatePostDialogProps {
@@ -16,7 +17,18 @@ interface CreatePostDialogProps {
 }
 
 export const CreatePostDialog = ({ open, onClose }: CreatePostDialogProps) => {
-  const notify = () => toast('Post have been created!');
+  const [createPost] = useCreatePostMutation();
+
+  const handleSubmit = async (formData: { title: string; body: string }) => {
+    try {
+      await createPost(formData).unwrap();
+      toast.success('Post has been created!');
+    } catch (e) {
+      toast.error('Something went wrong :(');
+    } finally {
+      onClose();
+    }
+  };
 
   return (
     <Dialog open={open} sx={{ p: 3 }}>
@@ -29,19 +41,10 @@ export const CreatePostDialog = ({ open, onClose }: CreatePostDialogProps) => {
           placeat?
         </DialogContentText>
 
-        <PostForm />
+        <PostForm onSubmit={handleSubmit} />
       </DialogContent>
       <DialogActions>
-        <Button
-          type="submit"
-          form="formID"
-          variant="contained"
-          color="success"
-          onClick={() => {
-            onClose();
-            notify();
-          }}
-        >
+        <Button type="submit" form="formID" variant="contained" color="success">
           Create post
         </Button>
         <Button variant="contained" onClick={onClose}>

@@ -16,7 +16,7 @@ export const Footer = () => {
       <Typography
         component={Link}
         to="/"
-        color="#ffffff"
+        color="secondary"
         sx={{
           textDecoration: 'none',
           '&:hover': { textDecoration: 'underline' },

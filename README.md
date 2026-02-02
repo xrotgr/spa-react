@@ -16,6 +16,8 @@ This is a single page application made with React and RTK query for data fetchin
  npm install
 ```
 
+3. Create an .env file and insert VITE_API_URL variable with a value https://jsonplaceholder.typicode.com
+
 ## Usage
 
 To run the project, use the following command:

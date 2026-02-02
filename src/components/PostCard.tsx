@@ -1,4 +1,3 @@
-import NotFoundPage from '@/pages/NotFoundPage';
 import { Post, User } from '@/types/types';
 import {
   Card,
@@ -11,13 +10,10 @@ import {
 import { Link } from 'react-router-dom';
 
 interface PostCardProps extends Post {
-  users: User[];
+  user?: User;
 }
 
-export const PostCard = ({ title, id, userId, users }: PostCardProps) => {
-  if (!userId) return <NotFoundPage />;
-  const user = users.find((user) => +user.id === +userId);
-
+export const PostCard = ({ title, id, user }: PostCardProps) => {
   return (
     <Card
       variant="outlined"
