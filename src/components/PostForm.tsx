@@ -1,26 +1,19 @@
 import { useState } from 'react';
 import { TextField } from '@mui/material';
-import { useCreatePostMutation } from '../api.slice';
 
-export const PostForm = () => {
+interface PostFormProps {
+  onSubmit: (formData: { title: string; body: string }) => Promise<void>;
+}
+
+export const PostForm = ({ onSubmit }: PostFormProps) => {
   const [formData, setFormData] = useState({
     title: '',
     body: '',
   });
 
-  const [createPost] = useCreatePostMutation();
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      await createPost(formData).unwrap();
-      setFormData({
-        title: '',
-        body: '',
-      });
-    } catch (e) {
-      console.log(e);
-    }
+    onSubmit(formData);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

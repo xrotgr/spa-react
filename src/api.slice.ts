@@ -14,8 +14,8 @@ export const apiSlice = createApi({
       query: (postId) => `/posts/${postId}`,
     }),
     getUsers: builder.query<User[], void>({ query: () => '/users' }),
-    getComments: builder.query<PostComment[], void>({
-      query: () => '/comments',
+    getComments: builder.query<PostComment[], number>({
+      query: (postId) => `/posts/${postId}/comments`,
     }),
     createPost: builder.mutation<Post, Post>({
       query: (post) => ({ url: '/posts', method: 'POST', body: post }),

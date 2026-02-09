@@ -1,33 +1,23 @@
 import { useParams } from 'react-router-dom';
-import {
-  Typography,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Divider,
-  Box,
-  Avatar,
-  CircularProgress,
-} from '@mui/material';
-import { Fragment } from 'react';
-import { useGetCommentsQuery, useGetPostQuery } from '../api.slice';
+import { Typography, Box, CircularProgress } from '@mui/material';
+import { useGetPostQuery } from '../api.slice';
 import NotFoundPage from './NotFoundPage';
+import { PostComments } from '@/components/PostComments';
+import { skipToken } from '@reduxjs/toolkit/query';
 
 const PostPage = () => {
   const params = useParams();
   const postId = params.id ? parseInt(params.id, 10) : null;
 
+  const { data: post, isFetching: postsFetching } = useGetPostQuery(
+    postId ?? skipToken
+  );
+
   if (!postId || isNaN(+postId)) {
     return <NotFoundPage />;
   }
 
-  const { data: post, isFetching: postsFetching } = useGetPostQuery(postId);
-
-  const { data: comments = [], isFetching: commentsFetching } =
-    useGetCommentsQuery();
-
-  if (!post || postsFetching || commentsFetching) {
+  if (postsFetching) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <CircularProgress />
@@ -35,37 +25,15 @@ const PostPage = () => {
     );
   }
 
-  const postComments = comments.filter((comment) => comment.postId === post.id);
-
   return (
     <>
       <Typography gutterBottom variant="h4" sx={{ mb: 6 }}>
-        {post.title}
+        {post?.title}
       </Typography>
       <Typography gutterBottom variant="h6" sx={{ mb: 6 }}>
-        {post.body}
+        {post?.body}
       </Typography>
-      <Box>
-        <Typography variant="h5">Comments</Typography>
-        <List>
-          {postComments.map((postComment) => {
-            return (
-              <Fragment key={postComment.id}>
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar>H</Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={postComment.name}
-                    secondary={postComment.body}
-                  />
-                </ListItem>
-                <Divider />
-              </Fragment>
-            );
-          })}
-        </List>
-      </Box>
+      <PostComments postId={postId} />
     </>
   );
 };
