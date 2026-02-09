@@ -23,10 +23,9 @@ export const CreatePostDialog = ({ open, onClose }: CreatePostDialogProps) => {
     try {
       await createPost(formData).unwrap();
       toast.success('Post has been created!');
+      onClose();
     } catch (e) {
       toast.error('Something went wrong :(');
-    } finally {
-      onClose();
     }
   };
 

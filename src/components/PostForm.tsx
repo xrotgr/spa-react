@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { TextField } from '@mui/material';
 
 interface PostFormProps {
-  onSubmit: (formData: { title: string; body: string }) => void;
+  onSubmit: (formData: { title: string; body: string }) => Promise<void>;
 }
 
 export const PostForm = ({ onSubmit }: PostFormProps) => {
@@ -11,16 +11,9 @@ export const PostForm = ({ onSubmit }: PostFormProps) => {
     body: '',
   });
 
-  const resetForm = () =>
-    setFormData({
-      title: '',
-      body: '',
-    });
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit(formData);
-    resetForm();
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
